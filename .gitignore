@@ -1,0 +1,30 @@
+# System and OS files
+Thumbs.db
+.DS_Store
+*.log
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Antigravity temporary brain files
+.system_generated/
+scratch/
