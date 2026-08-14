@@ -4,9 +4,9 @@ description: >-
   泛微OA (Weaver E-Cology 9 / E9 / E8) 后端接口开发全功能指南与API手册。当需要进行泛微OA后端接口调用、E9 REST API对接、系统认证鉴权（AppID/Secret/RSA/AES/Token）、工作流程API（创建流程/流转/代办/已办）、人力资源组织架构同步（人员/部门/分部/岗位）、知识文档管理（上传/下载/创建文档）、考勤管理（打卡/请假/排班/加班/出差）、表单建模与自定义表单CRUD、门户组件开发、协作邮件、表单前端WfForm代码块开发、定时任务（CronJob/ScheduleTask）、WebService对接时使用此技能。
 ---
 
-# 泛微OA (E-Cology 9) 后端接口开发 Skill
+# 泛微OA (E-Cology 9 / E8) 全功能开发指南与 AI Skill
 
-本技能收录了泛微 OA (Ecology 9) 官方开放平台全部 **538** 个后端 REST 接口及云商店官方开发者技术文档，包含权威认证鉴权规范、RSA 密钥交换算法、防串号机制、前端表单代码块（WfForm / ModeForm API）、消息中心推送以及 Node.js / JavaScript 客户端 SDK。
+本技能收录了泛微 OA (Ecology 9) 官方开放平台全部 **538** 个后端 REST 接口及云商店官方开发者技术文档，包含权威认证鉴权规范、RSA 密钥交换算法、防串号机制、WebService (SOAP) 经典接口、高频业务 SQL 字典、第三方单点登录 (SSO) 与通讯录同步、前端表单代码块（WfForm / ModeForm API）、消息中心推送以及 Node.js / JavaScript 客户端 SDK。
 
 ---
 
@@ -57,6 +57,9 @@ description: >-
 | **流程表单前端 API** | WfForm API | 流程表单字段监听、动态修改属性、主子表计算、提交前拦截 | [11_wfform_frontend_api.md](./references/11_wfform_frontend_api.md) |
 | **表单建模前端 API** | ModeForm API | 建模卡片与查询列表前端 JS 扩展 API | [12_modeform_frontend_api.md](./references/12_modeform_frontend_api.md) |
 | **消息中心推送** | 推送/通知 | E9 系统与第三方双向推送消息、待办消息状态同步 | [13_message_push_apis.md](./references/13_message_push_apis.md) |
+| **WebService (SOAP)** | WSDL 规范 | `WorkflowService`、`DocService`、`HrmService` 接口与报文规范 | [14_webservice_soap_apis.md](./references/14_webservice_soap_apis.md) |
+| **高频 SQL 字典** | SQL 模版 | 待办分页、审批历史流转、组织树递归、主子表动态关联查询 | [15_high_frequency_sql_and_db_dict.md](./references/15_high_frequency_sql_and_db_dict.md) |
+| **第三方 SSO 与同步** | 钉/企/飞/CAS | 钉钉、企微、飞书单点登录免登与通讯录 WebHook 实时同步 | [16_thirdparty_sso_and_sync.md](./references/16_thirdparty_sso_and_sync.md) |
 
 ---
 

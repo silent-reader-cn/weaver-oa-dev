@@ -1,14 +1,16 @@
-# 泛微OA (E-Cology 9) 后端接口开发知识库与 Skill
+# 泛微OA (E-Cology 9 / E8) 全功能后端接口开发知识库与 AI Skill
 
-本项目已将泛微官方开放平台与云商店开发者文档（`https://e-cloudstore.com/`）全量 **538** 个后端 REST 接口及权威认证鉴权技术指南完整收录与清洗，转换为规范的 Markdown 文档体系，并封装为标准的 **Antigravity 开发 Skill** 与 **Node.js / JavaScript** 开发工具集。
+本项目整合了泛微官方开放平台与云商店开发者中心（`https://e-cloudstore.com/`）全量 **538** 个后端 REST 接口、官方安全认证鉴权体系、WebService (SOAP) 规范、高频业务 SQL 字典、第三方单点登录 (SSO) 与组织架构同步方案，并封装为标准的 **Antigravity AI 开发 Skill** 与 **Node.js / JavaScript** 开发工具包。
 
 ---
 
-## 🌟 核心特性
+## 🌟 核心知识体系 (16 大专题全覆盖)
 
-- **全量接口收录**: 覆盖 8 大业务模块（工作流、人力资源、知识管理、考勤、表单建模、门户、协作、邮件）共 **538** 个官方后端 API。
-- **深度认证指南**: 完整收录官方三步认证流程（`regist` 注册 -> `applytoken` 申请 -> 业务调用），包含 RSA 密钥加密规范、RSA 加密 `userid` 身份绑定、彻底屏蔽 Cookie 防串号机制、Jar 包冲突处理与 Redis 缓存排查。
-- **开箱即用 Skill**: 符合 Antigravity Skill 标准规范，位于 `.agents/skills/weaver-oa-dev/`，支持 AI 辅助快速检索与精准代码生成。
+- **全量 REST API (538个)**: 覆盖工作流 (45)、人力资源 (225)、知识管理 (60)、考勤 (107)、表单建模 (19)、门户 (76)、协作邮件 (6)。
+- **深度认证指南**: 官方三步认证全流程（`regist` 注册 -> `applytoken` 申请 -> 业务调用），包含 RSA 密钥加密规范、RSA 加密 `userid` 身份绑定、彻底屏蔽 Cookie 防串号机制、Jar 包冲突处理与 Redis 缓存排查。
+- **经典 WebService (SOAP)**: 涵盖 `WorkflowService` 流程创建/流转、`DocService` 附件 Base64 创建、`HrmService` 组织同步 WSDL 规范与 SOAP 报文。
+- **高频 SQL 字典**: 提供待办/已办高性能分页查询、审批流转历史日志全景图、部门递归查询 CTE、主子表动态关联查询等生产级 SQL 模版。
+- **第三方 SSO 与组织同步**: 钉钉 (DingTalk)、企业微信 (WeChat Work)、飞书 (Feishu) 免密登录与通讯录 WebHook 实时监听同步架构。
 - **前端 JS 完整 API**: 收录官方完整的流程表单 `WfForm` 与建模表单 `ModeForm` JavaScript API 全功能手册。
 - **实战 JS / Node.js 工具**: 提供原生 Node.js E9 开放平台标准鉴权 SDK（基于 Node.js 原生 `crypto` 库实现 RSA 密钥交换与自动 Token 维护，零第三方依赖）。
 
@@ -22,7 +24,7 @@ weaveroa/
 │   └── skills/
 │       └── weaver-oa-dev/                      # Antigravity 专属 Skill
 │           ├── SKILL.md                        # Skill 主入口与执行规范
-│           ├── references/                     # 接口文档与核心指南
+│           ├── references/                     # 16 大专题接口文档与核心指南
 │           │   ├── 01_auth_and_security.md     # 官方认证鉴权规范 (RSA+AES+Token+避坑指南)
 │           │   ├── 02_workflow_apis.md         # 工作流程 API (45个)
 │           │   ├── 03_hrm_apis.md              # 人力资源与组织架构 API (225个)
@@ -35,7 +37,10 @@ weaveroa/
 │           │   ├── 10_api_quick_index.md       # 538 个 API 端点速查字典
 │           │   ├── 11_wfform_frontend_api.md   # 流程表单前端 WfForm API 手册
 │           │   ├── 12_modeform_frontend_api.md # 建模表单前端 ModeForm API 手册
-│           │   └── 13_message_push_apis.md     # 消息中心与第三方推送开发指南
+│           │   ├── 13_message_push_apis.md     # 消息中心与第三方推送开发指南
+│           │   ├── 14_webservice_soap_apis.md  # WebService (SOAP) WSDL 接口规范
+│           │   ├── 15_high_frequency_sql_and_db_dict.md # 常用高频 SQL 与数据库表字典
+│           │   └── 16_thirdparty_sso_and_sync.md # 第三方单点登录 (SSO) 与组织架构集成
 │           ├── scripts/                        # JavaScript / Node.js 核心脚本
 │           │   ├── ecology_token_client.js     # Node.js 版 E9 鉴权与调用 SDK
 │           │   ├── api_search.js               # Node.js 版 API 命令行快速检索工具
@@ -45,7 +50,8 @@ weaveroa/
 │               ├── workflow_integration.js     # 工作流创建与待办查询 (Node.js)
 │               ├── hrm_organization_sync.js    # 人力资源与组织架构同步 (Node.js)
 │               ├── form_custom_codeblock.js    # 表单前端 WfForm JS 联动与校验代码块
-│               └── doc_attachment_upload.js    # 知识文档创建与富文本处理 (Node.js)
+│               ├── doc_attachment_upload.js    # 知识文档创建与富文本处理 (Node.js)
+│               └── webservice_soap_client.js   # 原生 Node.js SOAP WebService 客户端
 ├── docs/                                       # 离线 Markdown 文档库 (供阅读)
 │   ├── README.md
 │   ├── 01_开发规范与安全认证.md
@@ -60,7 +66,10 @@ weaveroa/
 │   ├── 10_API接口速查字典.md
 │   ├── 11_流程表单前端WfForm接口.md
 │   ├── 12_表单建模前端ModeForm接口.md
-│   └── 13_消息中心与第三方推送.md
+│   ├── 13_消息中心与第三方推送.md
+│   ├── 14_WebService接口开发规范(SOAP).md
+│   ├── 15_常用高频SQL与数据库表字典.md
+│   └── 16_第三方单点登录(SSO)与组织架构集成.md
 └── README.md
 ```
 
