@@ -25,6 +25,13 @@ env/
 venv/
 .venv/
 
+# Archives & binaries
+*.7z
+*.zip
+*.rar
+*.tar
+*.gz
+
 # Antigravity temporary brain files
 .system_generated/
 scratch/
