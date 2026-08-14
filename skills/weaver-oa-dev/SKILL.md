@@ -1,12 +1,12 @@
 ---
 name: weaver-oa-dev
 description: >-
-  泛微OA (Weaver E-Cology 9 / E9 / E8) 后端接口开发全功能指南与API手册。当需要进行泛微OA后端接口调用、E9 REST API对接、系统认证鉴权（AppID/Secret/RSA/AES/Token）、工作流程API（创建流程/流转/代办/已办）、人力资源组织架构同步（人员/部门/分部/岗位）、知识文档管理（上传/下载/创建文档）、考勤管理（打卡/请假/排班/加班/出差）、表单建模与自定义表单CRUD、门户组件开发、协作邮件、表单前端WfForm代码块开发、定时任务（CronJob/ScheduleTask）、WebService对接时使用此技能。
+  泛微OA (Weaver E-Cology 9 / E9 / E8) 后端接口与数据库开发全功能指南。当需要进行泛微OA后端接口调用、E9 REST API对接、系统认证鉴权（AppID/Secret/RSA/AES/Token）、工作流程API（创建流程/流转/代办/已办）、人力资源组织架构同步（人员/部门/分部/岗位）、知识文档管理（上传/下载/创建文档）、考勤管理（打卡/请假/排班/加班/出差）、表单建模与自定义表单CRUD、底层1700+数据库表结构查询与SQL编写（如workflow_requestbase/hrmresource/workflow_currentoperator等）、WebService(SOAP)对接、表单前端WfForm/ModeForm代码块开发、定时任务（CronJob/ScheduleTask）时使用此技能。
 ---
 
 # 泛微OA (E-Cology 9 / E8) 全功能开发指南与 AI Skill
 
-本技能收录了泛微 OA (Ecology 9) 官方开放平台全部 **538** 个后端 REST 接口及云商店官方开发者技术文档，包含权威认证鉴权规范、RSA 密钥交换算法、防串号机制、WebService (SOAP) 经典接口、高频业务 SQL 字典、第三方单点登录 (SSO) 与通讯录同步、前端表单代码块（WfForm / ModeForm API）、消息中心推送以及 Node.js / JavaScript 客户端 SDK。
+本技能收录了泛微 OA (Ecology 9 / E8) 官方开放平台全部 **538** 个后端 REST 接口、**1,699** 张物理数据库表结构与字段字典，以及云商店官方开发者技术文档。涵盖权威认证鉴权规范、RSA 密钥交换算法、防串号机制、WebService (SOAP) 经典接口、高频业务 SQL 字典、第三方单点登录 (SSO) 与通讯录同步、前端表单代码块（WfForm / ModeForm API）、消息中心推送以及 Node.js / JavaScript 客户端 SDK。
 
 ---
 
@@ -40,9 +40,9 @@ description: >-
 
 ---
 
-## 2. 接口与技术参考手册导航
+## 2. 接口与技术参考手册导航 (17 大专题)
 
-| 模块名称 | 接口数 / 类型 | 核心内容 | 参考文档 |
+| 模块名称 | 数量 / 类型 | 核心内容 | 参考文档 |
 | :--- | :---: | :--- | :--- |
 | **开放平台安全认证** | 认证指南 | 三步握手、RSA/AES 算法、Cookie 屏蔽、白名单与 CORS | [01_auth_and_security.md](./references/01_auth_and_security.md) |
 | **工作流程 (Workflow)** | 45 个 API | 流程创建、流程流转、待办/已办列表、流程表单字段读写、流转日志 | [02_workflow_apis.md](./references/02_workflow_apis.md) |
@@ -53,17 +53,38 @@ description: >-
 | **门户管理 (Portal)** | 76 个 API | 门户元素加载、菜单结构、快捷入口、数据中心元素、待办角标 | [07_portal_apis.md](./references/07_portal_apis.md) |
 | **协作与邮件 (Cowork/Email)**| 6 个 API | 协作交流列表、板块管理、邮件总数与未读邮件刷新、监控日志 | [08_cowork_and_email_apis.md](./references/08_cowork_and_email_apis.md) |
 | **后端二次开发指南** | Java/架构 | 自定义 Action、定时调度 BaseCronJob、JAX-RS REST 服务、RecordSet | [09_custom_backend_dev.md](./references/09_custom_backend_dev.md) |
-| **全量速查字典** | 538 个 API | 全量端点按路径、方法、模块快速检索字典 | [10_api_quick_index.md](./references/10_api_quick_index.md) |
+| **全量 API 速查字典** | 538 个 API | 全量端点按路径、方法、模块快速检索字典 | [10_api_quick_index.md](./references/10_api_quick_index.md) |
 | **流程表单前端 API** | WfForm API | 流程表单字段监听、动态修改属性、主子表计算、提交前拦截 | [11_wfform_frontend_api.md](./references/11_wfform_frontend_api.md) |
 | **表单建模前端 API** | ModeForm API | 建模卡片与查询列表前端 JS 扩展 API | [12_modeform_frontend_api.md](./references/12_modeform_frontend_api.md) |
 | **消息中心推送** | 推送/通知 | E9 系统与第三方双向推送消息、待办消息状态同步 | [13_message_push_apis.md](./references/13_message_push_apis.md) |
 | **WebService (SOAP)** | WSDL 规范 | `WorkflowService`、`DocService`、`HrmService` 接口与报文规范 | [14_webservice_soap_apis.md](./references/14_webservice_soap_apis.md) |
 | **高频 SQL 字典** | SQL 模版 | 待办分页、审批历史流转、组织树递归、主子表动态关联查询 | [15_high_frequency_sql_and_db_dict.md](./references/15_high_frequency_sql_and_db_dict.md) |
 | **第三方 SSO 与同步** | 钉/企/飞/CAS | 钉钉、企微、飞书单点登录免登与通讯录 WebHook 实时同步 | [16_thirdparty_sso_and_sync.md](./references/16_thirdparty_sso_and_sync.md) |
+| **全量 1700+ 数据库表字典** | 1,699 张表 | 涵盖 26 个模块的全部底层物理表结构、字段类型、中文名与主外键 | [17_all_tables_index.md](./references/17_all_tables_index.md) |
 
 ---
 
-## 3. Node.js 客户端开发与使用
+## 3. 数据库表与 SQL 查询指南 (Weaver SQL Expert)
+
+在 `references/database_tables/` 目录下收录了 26 个业务模块共 **1,699** 张表的详细字段定义：
+
+- **快速定位表结构**：
+  - 工作流程表：`references/database_tables/工作流程/`（如 `workflow_requestbase.md`, `workflow_currentoperator.md`）
+  - 人力资源表：`references/database_tables/人力资源/`（如 `hrmresource.md`, `hrmdepartment.md`）
+  - 考勤表：`references/database_tables/E9新版考勤表结构/`（如 `hrmschedulesign.md`, `kq_balanceOfLeave.md`）
+  - 建模表：`references/database_tables/表单建模/`（如 `modeinfo.md`, `workflow_bill.md`）
+- **命令行检索表结构**：
+  ```bash
+  # 检索包含待办的表
+  node scripts/table_search.js 待办
+  
+  # 检索指定表名并查看完整字段定义
+  node scripts/table_search.js workflow_currentoperator -d
+  ```
+
+---
+
+## 4. Node.js 客户端开发与使用
 
 在 `scripts/ecology_token_client.js` 中已集成完整的原生 Node.js SDK，自动完成 RSA 加密握手与 Cookie 隔离：
 
