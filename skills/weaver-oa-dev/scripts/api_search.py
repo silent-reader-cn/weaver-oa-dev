@@ -1,94 +1,79 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-泛微OA (E-Cology 9) 538 个后端 REST API 快速检索工具
-支持按关键词（中文名、URL路径、参数名、模块名）进行精确或模糊检索
+泛微OA (Ecology 9) 后端 REST API 快速检索工具 (Python 版)
 """
 
-import os
 import sys
+import os
 import json
-import io
 import argparse
+import io
 
+# 强制 UTF-8 输出
 if sys.platform == 'win32':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-SCRATCH_JSON = os.path.join(r"C:\Users\Admin\.gemini\antigravity\brain\86c241ed-45ea-453f-a153-6d579096f1df\scratch\all_apis_raw.json")
+API_DICT_PATH = os.path.join(SCRIPT_DIR, "apis_dictionary.json")
 
 def load_apis():
-    if os.path.exists(SCRATCH_JSON):
-        with open(SCRATCH_JSON, 'r', encoding='utf-8') as f:
+    if os.path.exists(API_DICT_PATH):
+        with open(API_DICT_PATH, 'r', encoding='utf-8') as f:
             return json.load(f)
-    print("错误: 找不到 API 数据源文件")
+    print(f"错误: 找不到 API 数据文件 {API_DICT_PATH}")
     return []
 
 def search_apis(keyword=None, module=None, method=None, limit=20):
-    docs = load_apis()
+    apis = load_apis()
     results = []
     
-    kw = keyword.lower().strip() if keyword else None
-    mod = module.lower().strip() if module else None
-    meth = method.upper().strip() if method else None
+    kw = keyword.lower() if keyword else None
+    mod = module.lower() if module else None
+    meth = method.upper() if method else None
 
-    for item in docs:
-        data = item['data']
-        leaf = item['leaf']
-        
-        title = data.get('title') or leaf.get('name') or ''
-        url = data.get('url', '')
-        category = leaf.get('category', '')
-        full_path = leaf.get('full_path', '')
-        m = (data.get('method') or data.get('methodSelect') or ('POST' if 'paService' in url else 'GET')).upper()
-        memo = data.get('memo', '')
-        params = [p.get('name', '') for p in data.get('params', [])]
+    for api in apis:
+        api_mod = api.get('module', '')
+        api_name = api.get('apiName', '')
+        api_path = api.get('path', '')
+        api_meth = api.get('method', '')
 
-        if mod and mod not in category.lower() and mod not in full_path.lower():
+        if mod and mod not in api_mod.lower():
             continue
-        if meth and meth != m:
+        if meth and api_meth.upper() != meth:
             continue
         if kw:
-            match = (
-                kw in title.lower() or
-                kw in url.lower() or
-                kw in memo.lower() or
-                any(kw in p.lower() for p in params)
-            )
-            if not match:
+            if kw not in api_name.lower() and kw not in api_path.lower() and kw not in api_mod.lower():
                 continue
+        results.append(api)
 
-        results.append({
-            'title': title,
-            'url': url,
-            'method': m,
-            'module': category,
-            'path': full_path,
-            'params_count': len(params),
-            'memo': memo
-        })
+    print(f"\n共检索到 {len(results)} 个匹配接口 (展示前 {min(limit, len(results))} 条):\n")
+    print(f"{'序号':<4} | {'模块':<10} | {'方法':<6} | {'接口路径':<52} | 接口名称")
+    print("-" * 105)
 
-    print(f"\n共检索到 {len(results)} 条匹配接口 (展示前 {min(limit, len(results))} 条):\n")
-    print(f"{'序号':<4} | {'模块':<8} | {'Method':<6} | {'接口名称':<30} | {'Endpoint 路径'}")
-    print("-" * 100)
     for idx, r in enumerate(results[:limit], 1):
-        print(f"{idx:<4} | {r['module']:<8} | {r['method']:<6} | {r['title'][:28]:<30} | {r['url']}")
-    print("-" * 100)
-    if len(results) > limit:
-        print(f"提示: 还有 {len(results) - limit} 条结果未展示，可通过 --limit 参数增加展示数量。")
+        print(f"{idx:<4} | {r.get('module', ''):<10} | {r.get('method', ''):<6} | {r.get('path', ''):<52} | {r.get('apiName', '')}")
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="泛微OA E9 API 快速检索工具")
-    parser.add_argument("keyword", nargs="?", default=None, help="搜索关键词 (支持接口名、URL路径、参数名)")
-    parser.add_argument("-m", "--module", help="指定模块筛选 (如: 流程, 人力, 考勤, 知识, 表单, 门户)")
-    parser.add_argument("-X", "--method", help="指定 HTTP Method (GET, POST)")
-    parser.add_argument("-n", "--limit", type=int, default=20, help="最多显示条数 (默认 20)")
-    
+    print("-" * 105)
+    if len(results) > limit:
+        print(f"提示: 还有 {len(results) - limit} 条结果未展示，可通过缩小检索范围查看。\n")
+    else:
+        print("")
+
+def main():
+    parser = argparse.ArgumentParser(description="泛微OA REST API 快速检索工具")
+    parser.add_argument("keyword", nargs="?", default=None, help="搜索关键词 (支持接口名、路径、模块)")
+    parser.add_argument("-m", "--module", default=None, help="按模块过滤 (如: 工作流程, 人力资源, 知识管理)")
+    parser.add_argument("-X", "--method", default=None, help="按 HTTP 方法过滤 (GET, POST, PUT, DELETE)")
+    parser.add_argument("-n", "--limit", type=int, default=20, help="限制显示条数 (默认20)")
+
     args = parser.parse_args()
+
     if not args.keyword and not args.module and not args.method:
         parser.print_help()
-        print("\n示例: python api_search.py 待办")
-        print("示例: python api_search.py -m 人力资源 -X POST")
-        print("示例: python api_search.py /api/workflow")
-    else:
-        search_apis(args.keyword, args.module, args.method, args.limit)
+        return
+
+    search_apis(args.keyword, args.module, args.method, args.limit)
+
+if __name__ == '__main__':
+    main()
